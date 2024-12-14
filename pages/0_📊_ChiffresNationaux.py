@@ -6,7 +6,7 @@ Created on Mon Nov 18 21:25:24 2024
 """
 
 import streamlit as st
-from utils import load_data
+from utils import chargement_donnees
 import plotly.express as px
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -149,7 +149,7 @@ def Accidents_Par_Region_Et_Annee(df, annee):
     fig=plt.figure(figsize=[12,5])
     fig.patch.set_facecolor('#E0E0E0')
     fig.patch.set_alpha(0.7)
-    plt.title("Nombre d'accidents par régions",size=16)
+    plt.title("Nombre d'accidents par régions en " + str(annee),size=16)
     plt.bar(range(0,len(label)),df_count["Count"]
            ,edgecolor='black',color="#8891a1")
     plt.xticks(range(0,len(label)),label,rotation=90,size=13)
@@ -216,9 +216,8 @@ def affichage_annee_filtres(df):
 
 def Affichage():
         
-    
-    st.title(f" Chiffres des accidents en France")
-        
+    st.title(f":red_car: Chiffres des accidents en France")  
+      
    
     # Chargement des données
     #df_accidents_France = pd.read_csv('data/Accidents_France_2005_to_2023.csv',low_memory=False)
@@ -230,8 +229,7 @@ def Affichage():
     df_Accidents_Usagers_France_tues_V1 = pd.read_csv('data/df_Accidents_Usagers_France_tues_V1.csv',low_memory=False)
     df_Accidents_Usagers_France_Blesses_hospitalises = pd.read_csv('data/df_Accidents_Usagers_France_Blesses_hospitalises.csv',low_memory=False)
     df_Accidents_Usagers_France_Blesses_legers = pd.read_csv('data/df_Accidents_Usagers_France_Blesses_legers.csv',low_memory=False)
-    
- 
+     
     
     df_count_par_accident = pd.read_csv('data/dfResult_group_accident.csv')
     df_count_Usagers_Tues_Group = pd.read_csv('data/df_count_Usagers_Tues_Group.csv')
@@ -251,15 +249,15 @@ def Affichage():
     annee = affichage_annee_filtres(df_count_par_accident)
     
     Accidents_Par_Region_Et_Annee(df_accidents_France,annee)
-    st.markdown("### Nombre de tués")
+    #st.markdown("### Nombre de tués")
     
     
     
-    Accidents_Individus_Par_Region_Et_Annee(df_Accidents_Usagers_France_tues_V1, annee,2,"Nombre de tués par région et année")
+    Accidents_Individus_Par_Region_Et_Annee(df_Accidents_Usagers_France_tues_V1, annee,2,"Nombre de tués par région en " + str(annee))
     st.markdown("### Nombre de blessés hospitalisés")
-    Accidents_Individus_Par_Region_Et_Annee(df_Accidents_Usagers_France_Blesses_hospitalises, annee,3,"Nombre de blessés hospitalisés par régions et année")
+    Accidents_Individus_Par_Region_Et_Annee(df_Accidents_Usagers_France_Blesses_hospitalises, annee,3,"Nombre de blessés hospitalisés par régions en " + str(annee))
     st.markdown("### Nombre de blessés légers")
-    Accidents_Individus_Par_Region_Et_Annee(df_Accidents_Usagers_France_Blesses_legers, annee,4,"Nombre de blessés legers par régions et année")
+    Accidents_Individus_Par_Region_Et_Annee(df_Accidents_Usagers_France_Blesses_legers, annee,4,"Nombre de blessés legers par régions en " + str(annee))
  
 
 Affichage()

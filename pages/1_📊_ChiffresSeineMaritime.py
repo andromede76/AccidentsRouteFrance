@@ -6,7 +6,7 @@ Created on Mon Nov 18 21:25:24 2024
 """
 
 import streamlit as st
-from utils import load_data
+from utils import chargement_donnees
 import plotly.express as px
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -42,7 +42,7 @@ def affichage_annee_filtres(df):
 
 def Affichage():
     
-    st.title(f" Chiffres des accidents en Seine Maritime")
+   #st.title(f" Chiffres des accidents en Seine Maritime")
     
     # Chargement des données
     
@@ -65,9 +65,12 @@ def Affichage():
     Accidents_2005_to_2023_Blesses_legers_departement_76 = df_Accidents_Usagers_76[(df_Accidents_Usagers_76["grav"]==4)]
     
     annee = affichage_annee_filtres(df_accidents_76)
-    display_graphe(df_accidents_76,"Nombre d'accidents en Seine Maritime par année")
-    display_graphe(Accidents_2005_to_2023_tues_76,"Nombre de tués en Seine Maritime par année")
-    display_graphe(Accidents_2005_to_2023_Blesses_hospitalises_departement_76,"Nombre de blessés hospitalisés en Seine Maritime par année")
-    display_graphe(Accidents_2005_to_2023_Blesses_legers_departement_76,"Nombre de blessés legers en Seine Maritime par année")
+    
+    st.title(":red_car: Chiffres des accidents en Seine Maritime pour l'année " + str(annee))
+    
+    display_graphe(df_accidents_76,"Nombre d'accidents en Seine Maritime par années")
+    display_graphe(Accidents_2005_to_2023_tues_76,"Nombre de tués en Seine Maritime par années")
+    display_graphe(Accidents_2005_to_2023_Blesses_hospitalises_departement_76,"Nombre de blessés hospitalisés en Seine Maritime par années")
+    display_graphe(Accidents_2005_to_2023_Blesses_legers_departement_76,"Nombre de blessés legers en Seine Maritime par années")
 
 Affichage()

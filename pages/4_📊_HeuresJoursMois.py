@@ -15,7 +15,7 @@ import seaborn as sns
 from xplotter.insights import *
 import matplotlib.pyplot as plt
 
-from utils import load_data
+from utils import chargement_donnees
 
 st.set_page_config(layout="wide", page_icon="🚗", page_title="Heures Jours Mois")
 
@@ -138,10 +138,12 @@ def Affichage():
     
     
     annee = affichage_annee_filtres(df_accidents_76)
-    selection = st.selectbox("Selection", ["Accident","Blessures legéres", "Blessés hospitalisés","Tués"])
+    selection = st.selectbox("Selection", ["Accidents","Blessés legers", "Blessés hospitalisés","Tués"])
+    
+    st.title(":red_car: Analyse des moments des " + selection + " en Seine Maritime pour l'année " + str(annee))
     
     if selection:
-        if selection == "Accident":
+        if selection == "Accidents":
             couleur = '#b0cadc'
             
             #st.dataframe(df_accidents_lieux_usagers_76)
@@ -164,7 +166,7 @@ def Affichage():
                             
                 
         ###       
-        elif selection == "Blessures legéres":
+        elif selection == "Blessés legers":
             couleur = '#f5b005'
                         
             df_accident = df_accidents_lieux_usagers_76[['date','an','grav']]

@@ -16,7 +16,7 @@ from xplotter.insights import *
 import matplotlib.pyplot as plt
 
 
-from utils import load_data
+from utils import chargement_donnees
 
 st.set_page_config(layout="wide", page_icon="🚗", page_title="Répartition Victimes")
 
@@ -203,7 +203,7 @@ def pave(df,annee,couleur,type=0):
     
     st.pyplot(fig)
     
-    
+   
     
 
 
@@ -213,10 +213,12 @@ def Affichage():
     df = pd.read_csv('data/data_Accidents_lieux_usagers_76.csv')
     
     annee = affichage_annee_filtres(df)
-    selection = st.selectbox("Selection", ["Accident","Blessures legéres", "Blessés hospitalisés","Tués"])
+    selection = st.selectbox("Selection", ["Accidents","Blessés legers", "Blessés hospitalisés","Tués"])
+    
+    st.title(":red_car: Analyses des " + selection + " en Seine Maritime pour l'année " + str(annee))
     
     if selection:
-        if selection == "Accident":
+        if selection == "Accidents":
             couleur = '#b0cadc'
             
             categorie = ['an','grav', 'sexe','an_nais','trajet','catu']
@@ -228,7 +230,7 @@ def Affichage():
                    
             pave(df_accident,annee,couleur)
             
-        elif selection == "Blessures legéres":
+        elif selection == "Blessés legers":
             couleur = '#f5b005'
             df_bl = df[df.grav == 4]
             pave(df_bl,annee,couleur,4)

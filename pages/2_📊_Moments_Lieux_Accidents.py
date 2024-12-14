@@ -16,7 +16,7 @@ from xplotter.insights import *
 import matplotlib.pyplot as plt
 
 
-from utils import load_data
+from utils import chargement_donnees
 
 st.set_page_config(layout="wide", page_icon="🚗", page_title="Moments et lieux des accidents")
 
@@ -163,11 +163,11 @@ def pave_vehicule(df,annee,couleur):
     
     #st.dataframe(df)
     
-    categorie = ['Catégorie véhicule', 'Obstacle rencontrée','Obstacle mobile rencontré','Point choc initial','Manoeuvre principale']
+    categorie = ['Catégorie véhicule', 'Obstacle rencontré','Obstacle mobile rencontré','Point choc initial','Manoeuvre principale']
     
     dico = {
         'catv': 'Catégorie véhicule',
-        'obs': 'Obstacle rencontrée',
+        'obs': 'Obstacle rencontré',
         'obsm': 'Obstacle mobile rencontré',
         'choc': 'Point choc initial',
         'manv': 'Manoeuvre principale'
@@ -241,7 +241,7 @@ def pave_vehicule(df,annee,couleur):
            16:"Sortie de chaussée sans obstacle",
            17:"Buse âtête d'aqueduc"}
    
-    df['Obstacle rencontrée'] = df['Obstacle rencontrée'].map(dico_obstacle)
+    df['Obstacle rencontré'] = df['Obstacle rencontré'].map(dico_obstacle)
     
     dico_obstacle_mobile = {-1:"Non renseigné",
            0:"Aucun",
@@ -323,13 +323,13 @@ def pave_vehicule(df,annee,couleur):
     
     
     plot_countplot(df=vehicules,
-               col='Obstacle rencontrée',
+               col='Obstacle rencontré',
                order=True,
                palette=[couleur],
                ax=ax, orient='h',
                size_labels=10)
     
-    plt.title("Obstacle rencontrée",
+    plt.title("Obstacle rencontre",
           loc="center", fontsize=10, fontstyle='italic')
     
     st.pyplot(fig)
@@ -343,7 +343,7 @@ def pave_vehicule(df,annee,couleur):
                ax=ax, orient='h',
                size_labels=10)
     
-    plt.title("Obstacle rencontré",
+    plt.title("Obstacle mobile rencontré",
           loc="center", fontsize=10, fontstyle='italic')
     
     st.pyplot(fig)
@@ -507,12 +507,15 @@ def Affichage():
     data_Accidents_lieux_vehicules_76 = pd.read_csv('data/data_Accidents_lieux_vehicules_76.csv',low_memory=False)
         
     annee = affichage_annee_filtres(df_accidents_76)
-    selection = st.selectbox("Selection", ["Accident","Blessures legéres", "Blessés hospitalisés","Tués"])
+    selection = st.selectbox("Selection", ["Accidents","Blessés légers", "Blessés hospitalisés","Tués"])
+    
+    st.title(":red_car: Lieux des " + selection + " en Seine Maritime pour l'année " + str(annee))
+    st.markdown("### En vert les " + selection + " , en rouge les positions des radards fixes")
     
     radars =  pd.read_csv('data/radars.csv')
     
     if selection:
-        if selection == "Accident":
+        if selection == "Accidents":
             display_map(df_accidents_76,radars, annee)
             
             couleur = '#b0cadc'
@@ -521,7 +524,7 @@ def Affichage():
             
             pave_vehicule(data_Accidents_lieux_vehicules_76,annee,couleur)
             
-        elif selection == "Blessures legéres":
+        elif selection == "Blessés légers":
             df_accidents_Blessures_legeres = df_Accidents_Usagers_76[df_Accidents_Usagers_76.grav == 4]
             display_map(df_accidents_Blessures_legeres,radars, annee)
             
