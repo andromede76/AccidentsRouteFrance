@@ -10,5 +10,9 @@ import pandas as pd
 import os
 
 
-def load_data(annee):
+def chargement_donnees(annee):
     return annee
+
+def alignement(text):
+    for _ in range(text):
+        st.write("\n")
