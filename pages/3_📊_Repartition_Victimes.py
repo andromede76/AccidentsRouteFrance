@@ -21,10 +21,20 @@ from utils import chargement_donnees
 st.set_page_config(layout="wide", page_icon="🚗", page_title="Répartition Victimes")
 
 def affichage_annee_filtres(df):
-    year_list = list(df['an'].unique())
+    
+    df_a = df[df.an > 2018]
+    
+    year_list = list(df_a['an'].unique())
+    
+     
     year_list.sort(reverse=True)
     year = st.sidebar.selectbox('Année', year_list, 0)
     return year
+
+    #year_list = list(df['an'].unique())
+    #year_list.sort(reverse=True)
+    #year = st.sidebar.selectbox('Année', year_list, 0)
+    #return year
 
 def pave(df,annee,couleur,type=0):
     
